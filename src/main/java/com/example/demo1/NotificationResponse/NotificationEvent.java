@@ -51,8 +51,8 @@ public class NotificationEvent {
 		return booking_time;
 	}
 
-	public void setBooking_time(LocalTime booking_time) {
-		this.booking_time = booking_time;
+	public void setBooking_time(LocalTime localTime) {
+		this.booking_time = localTime;
 	}
 
 	public LocalDateTime getAppointment_scheduled() {

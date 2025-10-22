@@ -8,14 +8,14 @@ import org.springframework.context.annotation.Bean;
 
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import com.example.demo1.NotificationResponse.NotificationEvent;
+//import com.example.demo1.NotificationResponse.NotificationEvent;
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
 public class KafkaConfig {
 	 @Bean
-	    public ProducerFactory<String, NotificationEvent> producerFactory() {
+	    public ProducerFactory<String, Object> producerFactory() {
 	        Map<String, Object> configProps = new HashMap<>();
 	        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 	        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -24,7 +24,7 @@ public class KafkaConfig {
 	    }
 
 	    @Bean
-	    public KafkaTemplate<String, NotificationEvent> kafkaTemplate() {
+	    public KafkaTemplate<String, Object> kafkaTemplate() {
 	        return new KafkaTemplate<>(producerFactory());
 	    }
 
