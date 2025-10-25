@@ -150,14 +150,16 @@ public class Appointment_booked_service {
 	}
 	public void approveOrRejectAppointmentByDoctor(Appointment_Status_Mapping status_mapping,String status) throws Exception {
 		int id=this.mappingRepo.isValidAppointment(status_mapping.getAppointment_id(),status_mapping.getDoctor_id());
+		Patient_Details_To_Admin p2=this.feign.getPatientById(status_mapping.getPatient_id());
+
 		logger.info("Appointment exist "+id);
 		if(id!=0) {					
 		int status_Id=this.repo1.findIdByStatusName(status);
 		logger.info("Status id "+status_Id);
 		this.mappingRepo.updateAppointmentByDoctorId(status_Id, status_mapping.getAppointment_id(), status_mapping.getDoctor_id());
 			LocalDateTime appointment_date_time=this.repo.getAppointmentDetailsById(status_mapping.getAppointment_id(), status_mapping.getDoctor_id());
-			String message="Your Appointment scheduled on "+appointment_date_time +" has been "+status;
-			this.kafkaTemplate.send("update-appointment-by-doctor",message);
+			//String message="Hey "+ p2.getPatient_name()+" Your Appointment scheduled on "+appointment_date_time +" has been "+status+"Phone :"+p2.getPhone_number();
+			this.kafkaTemplate.send("update-appointment-by-doctor",status_mapping);
 
 			
 		
